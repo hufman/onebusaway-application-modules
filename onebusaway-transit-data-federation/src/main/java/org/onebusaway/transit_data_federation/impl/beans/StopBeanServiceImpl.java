@@ -20,7 +20,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
-import java.util.Set;
+import java.util.HashSet;
 
 import org.onebusaway.container.cache.Cacheable;
 import org.onebusaway.exceptions.NoSuchStopServiceException;
@@ -152,11 +152,18 @@ class StopBeanServiceImpl implements StopBeanService {
 
   private void fillRoutesForStopBean(StopEntry stop, StopBean sb, AgencyServiceInterval serviceInterval) {
 
-    Set<AgencyAndId> routeCollectionIds;
+    HashSet<AgencyAndId> routeCollectionIds = new HashSet<>();
     if (serviceInterval != null)
-      routeCollectionIds = _routeService.getRouteCollectionIdsForStopForServiceDate(stop.getId(), serviceInterval);
+      routeCollectionIds.addAll(_routeService.getRouteCollectionIdsForStopForServiceDate(stop.getId(), serviceInterval));
     else
-      routeCollectionIds = _routeService.getRouteCollectionIdsForStop(stop.getId());
+      routeCollectionIds.addAll(_routeService.getRouteCollectionIdsForStop(stop.getId()));
+
+    for (AgencyAndId childId : stop.getChildren()) {
+      if (serviceInterval != null)
+        routeCollectionIds.addAll(_routeService.getRouteCollectionIdsForStopForServiceDate(childId, serviceInterval));
+      else
+        routeCollectionIds.addAll(_routeService.getRouteCollectionIdsForStop(childId));
+    }
 
     List<RouteBean> routeBeans = new ArrayList<RouteBean>(
         routeCollectionIds.size());
