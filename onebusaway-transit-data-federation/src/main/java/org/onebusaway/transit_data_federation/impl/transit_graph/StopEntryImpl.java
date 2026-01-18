@@ -56,6 +56,8 @@ public class StopEntryImpl implements StopEntry, Serializable {
 
   private final AgencyAndId _parent;
 
+  private final ArrayList<AgencyAndId> _children;
+
   public StopEntryImpl(AgencyAndId id, double lat, double lon, AgencyAndId parent) {
       if (id == null)
         throw new IllegalArgumentException("id must not be null");
@@ -63,6 +65,7 @@ public class StopEntryImpl implements StopEntry, Serializable {
       _lat = lat;
       _lon = lon;
     _parent = parent;
+    _children = new ArrayList<>();
   }
   public StopEntryImpl(AgencyAndId id, double lat, double lon) {
     this(id, lat, lon, null);
@@ -161,6 +164,14 @@ public class StopEntryImpl implements StopEntry, Serializable {
 
   public AgencyAndId getParent() {
     return _parent;
+  }
+
+  public List<AgencyAndId> getChildren() {
+    return _children;
+  }
+
+  public void addChild(AgencyAndId child) {
+    _children.add(child);
   }
 
   /****

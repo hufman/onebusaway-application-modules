@@ -18,6 +18,7 @@ package org.onebusaway.transit_data_federation.bundle.tasks.transit_graph;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.Map;
 
 import org.onebusaway.collections.FactoryMap;
@@ -61,6 +62,7 @@ public class StopEntriesFactory {
     
     Map<String, ArrayList<StopEntry>> stopEntriesByAgencyId = new FactoryMap<String, ArrayList<StopEntry>>(
         new ArrayList<StopEntry>());
+    Map<AgencyAndId, ArrayList<AgencyAndId>> stopChildrenByParentId = new HashMap<>();
 
     for (Stop stop : stops) {
 
@@ -70,14 +72,27 @@ public class StopEntriesFactory {
 
       StopEntryImpl stopEntry;
       if (stop.getParentStation() != null) {
-        stopEntry = new StopEntryImpl(stop.getId(), stop.getLat(),
-                stop.getLon(), new AgencyAndId(stop.getId().getAgencyId(), stop.getParentStation()));
+        AgencyAndId parentId = new AgencyAndId(stop.getId().getAgencyId(), stop.getParentStation());
+        stopEntry = new StopEntryImpl(stop.getId(), stop.getLat(), stop.getLon(), parentId);
+        if (!stopChildrenByParentId.containsKey(parentId)) {
+          stopChildrenByParentId.put(parentId, new ArrayList<>());
+        }
+        stopChildrenByParentId.get(parentId).add(stop.getId());
       } else {
         stopEntry = new StopEntryImpl(stop.getId(), stop.getLat(), stop.getLon());
       }
       stopEntry.setWheelchairBoarding(getWheelchairBoardingAccessibilityForStop(stop));
       graph.putStopEntry(stopEntry);
       stopEntriesByAgencyId.get(stop.getId().getAgencyId()).add(stopEntry);
+    }
+
+    _log.info("parent stops: " + stopChildrenByParentId.size());
+    for (StopEntryImpl parent : graph.getStops()) {
+      if (stopChildrenByParentId.containsKey(parent.getId())) {
+        for (AgencyAndId childId : stopChildrenByParentId.get(parent.getId())) {
+          parent.addChild(childId);
+        }
+      }
     }
 
     for (Map.Entry<String, ArrayList<StopEntry>> entry : stopEntriesByAgencyId.entrySet()) {

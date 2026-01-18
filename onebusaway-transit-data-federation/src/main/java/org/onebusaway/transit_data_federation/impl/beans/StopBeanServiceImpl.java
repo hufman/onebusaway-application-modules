@@ -128,6 +128,7 @@ class StopBeanServiceImpl implements StopBeanService {
       fillRoutesForStopBean(parent, parentBean, serviceInterval);
       sb.setParent(parentBean);
     }
+    fillChildrenForStopBean(stop, sb, serviceInterval);
     fillRoutesForStopBean(stop, sb, serviceInterval);
     fillTransfersForStopBean(stop, narrative, sb);
     return sb;
@@ -168,6 +169,19 @@ class StopBeanServiceImpl implements StopBeanService {
     Collections.sort(routeBeans, _routeBeanComparator);
 
     sb.setRoutes(routeBeans);
+  }
+
+  private void fillChildrenForStopBean(StopEntry stop, StopBean sb, AgencyServiceInterval serviceInterval) {
+    ArrayList<StopBean> children = new ArrayList<>();
+    for (AgencyAndId childId : stop.getChildren()) {
+      StopBean childBean = new StopBean();
+      StopNarrative childNarrative = _narrativeService.getStopForId(childId);
+      StopEntry child = _transitGraphDao.getStopEntryForId(childId);
+      fillStopBean(child, childNarrative, childBean);
+      fillRoutesForStopBean(child, childBean, serviceInterval);
+      children.add(childBean);
+    }
+    sb.setChildren(children);
   }
 
   private void fillStopBean(StopEntry stop, StopNarrative narrative,

@@ -46,6 +46,7 @@ public class StopBean implements Serializable {
   private Double distanceAwayFromQuery;
 
   private StopBean parent;
+  private List<StopBean> children;
 
   public String getId() {
     return id;
@@ -152,11 +153,27 @@ public class StopBean implements Serializable {
   }
 
   /**
-   * GTFS paretn stop reference.
+   * GTFS parent stop reference.
    * @param parent AgencyAndId as a string
    */
   public void setParent(StopBean parent) {
     this.parent = parent;
+  }
+
+  /**
+   * GTFS children stop references.
+   * @return
+   */
+  public List<StopBean> getChildren() {
+    return children;
+  }
+
+  /**
+   * GTFS children stop references.
+   * @param children
+   */
+  public void setChildren(List<StopBean> children) {
+    this.children = children;
   }
 
   /***************************************************************************
