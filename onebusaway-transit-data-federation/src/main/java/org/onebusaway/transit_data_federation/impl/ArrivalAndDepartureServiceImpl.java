@@ -149,6 +149,12 @@ class ArrivalAndDepartureServiceImpl implements ArrivalAndDepartureService {
       }
     }
 
+    for (ArrivalAndDepartureInstance instance : instances) {
+      if (instance.getScheduledTrack() == null && stop.getPlatformCode() != null) {
+        instance.setScheduledTrack(stop.getPlatformCode());
+      }
+    }
+
     if (removeFuturePredictionsWithoutRealtime) {
 
       List<ArrivalAndDepartureInstance> filteredInstances = new ArrayList<ArrivalAndDepartureInstance>();
@@ -192,6 +198,10 @@ class ArrivalAndDepartureServiceImpl implements ArrivalAndDepartureService {
 
       ArrivalAndDepartureInstance instance = createArrivalAndDepartureForStopTimeInstance(
           sti, prevFrequencyTime);
+
+      if (stop.getPlatformCode() != null) {
+        instance.setScheduledTrack(stop.getPlatformCode());
+      }
 
       if (sti.getFrequency() == null) {
 

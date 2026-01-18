@@ -82,6 +82,7 @@ public class StopEntriesFactory {
         stopEntry = new StopEntryImpl(stop.getId(), stop.getLat(), stop.getLon());
       }
       stopEntry.setWheelchairBoarding(getWheelchairBoardingAccessibilityForStop(stop));
+      stopEntry.setPlatformCode(stop.getPlatformCode());
       graph.putStopEntry(stopEntry);
       stopEntriesByAgencyId.get(stop.getId().getAgencyId()).add(stopEntry);
     }

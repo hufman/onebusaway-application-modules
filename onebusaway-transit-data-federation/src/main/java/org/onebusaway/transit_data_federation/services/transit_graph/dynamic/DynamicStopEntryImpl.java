@@ -41,6 +41,8 @@ public class DynamicStopEntryImpl implements StopEntry, Serializable {
 
     private EAccessibility _wheelchairBoarding = EAccessibility.UNKNOWN;
 
+    private String _platformCode = null;
+
     private transient int _index;
 
     private transient List<BlockStopTimeIndex> _stopTimeIndices = null;
@@ -71,6 +73,10 @@ public class DynamicStopEntryImpl implements StopEntry, Serializable {
 
     public void setWheelchairBoarding(EAccessibility wheelchairBoarding) {
         _wheelchairBoarding = wheelchairBoarding;
+    }
+
+    public void setPlatformCode(String platformCode) {
+        _platformCode = platformCode;
     }
 
     public void setIndex(int index) {
@@ -154,6 +160,8 @@ public class DynamicStopEntryImpl implements StopEntry, Serializable {
     public EAccessibility getWheelchairBoarding() {
         return _wheelchairBoarding;
     }
+
+    public String getPlatformCode() { return _platformCode; }
 
     @Override
     public int getIndex() {

@@ -34,6 +34,8 @@ public interface StopEntry extends Comparable<StopEntry> {
 
   public EAccessibility getWheelchairBoarding();
 
+  public String getPlatformCode();
+
   public int getIndex();
 
   public AgencyAndId getParent();
