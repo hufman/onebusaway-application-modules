@@ -70,6 +70,11 @@ class StopWithArrivalsAndDeparturesBeanServiceImpl implements
 
     List<ArrivalAndDepartureBean> arrivalsAndDepartures = _arrivalsAndDeparturesBeanService.getArrivalsAndDeparturesByStopId(
         id, query);
+    for (StopBean child : stop.getChildren()) {
+      AgencyAndId childId = AgencyAndIdLibrary.convertFromString(child.getId());
+      List<ArrivalAndDepartureBean> childArrivalsAndDepartures = _arrivalsAndDeparturesBeanService.getArrivalsAndDeparturesByStopId(childId, query);
+      arrivalsAndDepartures.addAll(childArrivalsAndDepartures);
+    }
 
     List<AgencyAndId> nearbyStopIds = _nearbyStopsBeanService.getNearbyStops(
         stop, 100);
@@ -79,6 +84,13 @@ class StopWithArrivalsAndDeparturesBeanServiceImpl implements
 
     List<ServiceAlertBean> situations = _serviceAlertsBeanService.getServiceAlertsForStopId(
         query.getTime(), id);
+    for (StopBean child : stop.getChildren()) {
+      situations.addAll(
+        _serviceAlertsBeanService.getServiceAlertsForStopId(
+          query.getTime(), AgencyAndIdLibrary.convertFromString(child.getId())
+        )
+      );
+    }
 
     // looks for service alerts for schedules routes -- not just active service
     Map<String, ServiceAlertBean> situationsById = new HashMap<String, ServiceAlertBean>();
