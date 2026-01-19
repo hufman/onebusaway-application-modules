@@ -34,6 +34,8 @@ public class StopBean implements Serializable {
 
   private String code;
 
+  private String platformCode;
+
   private int locationType;
 
   private List<RouteBean> routes;
@@ -99,6 +101,10 @@ public class StopBean implements Serializable {
   public void setCode(String code) {
     this.code = code;
   }
+
+  public String getPlatformCode() { return platformCode; }
+
+  public void setPlatformCode(String platformCode) { this.platformCode = platformCode; }
 
   public int getLocationType() {
     return locationType;

@@ -200,6 +200,7 @@ class StopBeanServiceImpl implements StopBeanService {
     bean.setName(narrative.getName());
     bean.setCode(StringLibrary.getBestName(narrative.getCode(),
         stop.getId().getId()));
+    bean.setPlatformCode(stop.getPlatformCode());
     bean.setLocationType(narrative.getLocationType());
     bean.setDirection(narrative.getDirection());
     bean.setWheelchairBoarding(stop.getWheelchairBoarding());

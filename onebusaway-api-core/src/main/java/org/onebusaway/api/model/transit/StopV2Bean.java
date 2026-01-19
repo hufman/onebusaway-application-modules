@@ -36,6 +36,8 @@ public class StopV2Bean implements Serializable, HasId {
 
   private String code;
 
+  private String platformCode;
+
   private int locationType;
 
   private EAccessibility wheelchairBoarding;
@@ -93,6 +95,10 @@ public class StopV2Bean implements Serializable, HasId {
   public void setCode(String code) {
     this.code = code;
   }
+
+  public String getPlatformCode() { return platformCode; }
+
+  public void setPlatformCode(String platformCode) { this.platformCode = platformCode; }
 
   public int getLocationType() {
     return locationType;

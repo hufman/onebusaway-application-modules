@@ -461,6 +461,7 @@ public class BeanFactoryV2 {
   public StopV2Bean getStop(StopBean stop) {
     StopV2Bean bean = new StopV2Bean();
     bean.setCode(stop.getCode());
+    bean.setPlatformCode(stop.getPlatformCode());
     bean.setDirection(stop.getDirection());
     bean.setId(stop.getId());
     bean.setLat(stop.getLat());
@@ -489,6 +490,7 @@ public class BeanFactoryV2 {
       StopBean parent = stop.getParent();
       StopV2Bean parentBean = new StopV2Bean();
       parentBean.setCode(parent.getCode());
+      parentBean.setPlatformCode(parent.getPlatformCode());
       parentBean.setDirection(parent.getDirection());
       parentBean.setId(parent.getId());
       parentBean.setLat(parent.getLat());
@@ -622,6 +624,7 @@ public class BeanFactoryV2 {
       stiBean.setDepartureTime(sti.getDepartureTime());
       stiBean.setStopHeadsign(sti.getStopHeadsign());
       stiBean.setDistanceAlongTrip(sti.getDistanceAlongTrip());
+      stiBean.setStopPlatformCode(sti.getStopPlatformCode());
 
       stiBean.setStopId(sti.getStop().getId());
       stiBean.setHistoricalOccupancy(sti.getHistoricalOccupancy());
