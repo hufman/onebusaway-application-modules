@@ -30,6 +30,8 @@ public class TripStopTimeBean implements Serializable {
   private StopBean stop;
 
   private String stopHeadsign;
+
+  private String stopPlatformCode;
   
   private double distanceAlongTrip;
 
@@ -68,6 +70,10 @@ public class TripStopTimeBean implements Serializable {
   public void setStopHeadsign(String stopHeadsign) {
     this.stopHeadsign = stopHeadsign;
   }
+
+  public String getStopPlatformCode() { return stopPlatformCode; }
+
+  public void setStopPlatformCode(String stopPlatformId) { this.stopPlatformCode = stopPlatformId; }
 
   public double getDistanceAlongTrip() {
     return distanceAlongTrip;

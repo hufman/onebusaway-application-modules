@@ -31,6 +31,8 @@ public class TripStopTimeV2Bean implements Serializable {
 
   private String stopHeadsign;
 
+  private String stopPlatformCode;
+
   private double distanceAlongTrip;
 
   private String historicalOccupancy;
@@ -66,6 +68,10 @@ public class TripStopTimeV2Bean implements Serializable {
   public void setStopHeadsign(String stopHeadsign) {
     this.stopHeadsign = stopHeadsign;
   }
+
+  public String getStopPlatformCode() { return stopPlatformCode; }
+
+  public void setStopPlatformCode(String stopPlatformId) { this.stopPlatformCode = stopPlatformId; }
 
   public double getDistanceAlongTrip() {
     return distanceAlongTrip;

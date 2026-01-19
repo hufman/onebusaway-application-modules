@@ -16,8 +16,6 @@
  */
 package org.onebusaway.transit_data_federation.impl.beans;
 
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.TimeZone;
 
@@ -139,6 +137,7 @@ public class TripStopTimesBeanServiceImpl implements TripStopTimesBeanService {
       StopEntry stopEntry = stopTime.getStop();
       StopBean stopBean = _stopBeanService.getStopForId(stopEntry.getId(), null);
       stBean.setStop(stopBean);
+      stBean.setStopPlatformCode(stopBean.getPlatformCode());
       stBean.setDistanceAlongTrip(stopTime.getShapeDistTraveled());
       stBean.setGtfsSequence(stopTime.getGtfsSequence());
 
