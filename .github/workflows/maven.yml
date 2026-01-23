@@ -3,15 +3,20 @@
 
 name: Java CI with Maven
 
+
+env:
+  BRANCH_NAME: ${{ github.base_ref || github.ref_name }}
+
 on:
   push:
-    branches: [ main ]
   pull_request:
-    branches: [ main ]
 
 jobs:
   build:
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
     steps:
       - uses: actions/checkout@v4
       - name: Set up JDK 11
@@ -23,4 +28,10 @@ jobs:
       - name: Build with Maven
         run: mvn -U clean install -Ptravis -Dhttps.protocols=TLSv1,TLSv1.1,TLSv1.2 -DskipTests=true -Dgpg.skip=true -Dmaven.javadoc.skip=true -Dvalidate.silent=true -Dlog4j.configuration= -B -V -q
       - name: Test with Maven
+        if: ${{ env.BRANCH_NAME != 'maven_package' }}
         run: mvn test -Dlog4j.configuration=
+      - name: Release to Github Packages
+        run: |
+          mvn deploy -DskipTests -Dgpg.skip
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

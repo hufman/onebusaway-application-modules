@@ -82,18 +82,38 @@
                 <enabled>false</enabled>
             </snapshots>
         </repository>
+        <repository>
+            <id>github</id>
+            <url>https://maven.pkg.github.com/hufman/onebusaway-application-modules</url>
+            <releases>
+                <enabled>true</enabled>
+            </releases>
+            <snapshots>
+                <enabled>true</enabled>
+            </snapshots>
+        </repository>
     </repositories>
+    <distributionManagement>
+        <repository>
+            <id>github</id>
+            <url>https://maven.pkg.github.com/hufman/onebusaway-application-modules</url>
+        </repository>
+        <snapshotRepository>
+            <id>github</id>
+            <url>https://maven.pkg.github.com/hufman/onebusaway-application-modules</url>
+        </snapshotRepository>
+    </distributionManagement>
 
     <scm>
-        <connection>scm:git:git@github.com:onebusaway/onebusaway-application-modules.git</connection>
-        <developerConnection>scm:git:git@github.com:onebusaway/onebusaway-application-modules.git</developerConnection>
-        <url>scm:git:git@github.com:onebusaway/onebusaway-application-modules</url>
+        <connection>scm:git:git@github.com:hufman/onebusaway-application-modules.git</connection>
+        <developerConnection>scm:git:git@github.com:hufman/onebusaway-application-modules.git</developerConnection>
+        <url>scm:git:git@github.com:hufman/onebusaway-application-modules</url>
         <tag>onebusaway-application-modules-2.7.0</tag>
     </scm>
 
     <issueManagement>
         <system>GitHub</system>
-        <url>https://github.com/OneBusAway/onebusaway-application-modules/issues</url>
+        <url>https://github.com/hufman/onebusaway-application-modules/issues</url>
     </issueManagement>
 
     <!-- releases and snapshots should be inherited -->
@@ -602,16 +622,6 @@
                         </configuration>
                     </execution>
                 </executions>
-            </plugin>
-            <plugin>
-                <groupId>org.sonatype.central</groupId>
-                <artifactId>central-publishing-maven-plugin</artifactId>
-                <version>0.7.0</version>
-                <extensions>true</extensions>
-                <configuration>
-                    <publishingServerId>central</publishingServerId>
-                    <autoPublish>true</autoPublish>
-                </configuration>
             </plugin>
         </plugins>
         <!-- force a newer version of ssh for site:deploy -->
